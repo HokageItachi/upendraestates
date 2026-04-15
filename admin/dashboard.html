@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dashboard — Vinodha Estates Admin</title>
+<link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+    <!-- Topbar -->
+    <header class="topbar">
+        <div class="top-brand">
+            <div class="brand-mark small">V</div>
+            <strong>Vinodha Admin</strong>
+        </div>
+        <div class="top-actions">
+            <span id="adminEmail" class="muted"></span>
+            <button id="logoutBtn" class="btn-outline">Logout</button>
+        </div>
+    </header>
+
+    <main class="dash">
+        <section class="dash-head">
+            <div>
+                <h2>Properties</h2>
+                <p class="muted">Manage the Gallery & Properties sections of your website.</p>
+            </div>
+            <button class="btn-gold" id="openAddModal">+ Add Property</button>
+        </section>
+
+        <!-- Stats -->
+        <section class="stat-row">
+            <div class="stat"><span>Total</span><strong id="statTotal">0</strong></div>
+            <div class="stat"><span>Featured</span><strong id="statFeatured">0</strong></div>
+            <div class="stat"><span>Cities</span><strong id="statCities">0</strong></div>
+        </section>
+
+        <!-- Search -->
+        <div class="search-row">
+            <input type="text" id="search" placeholder="Search by title, city, location, type..." />
+        </div>
+
+        <!-- Table -->
+        <div class="table-wrap">
+            <table class="prop-table">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Title</th>
+                        <th>Type</th>
+                        <th>City</th>
+                        <th>Location</th>
+                        <th>Price</th>
+                        <th>Area</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="propTableBody">
+                    <tr><td colspan="8" class="empty">Loading...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Add / Edit Modal -->
+    <div class="modal" id="formModal">
+        <div class="modal-box">
+            <div class="modal-head">
+                <h3 id="formTitle">Add Property</h3>
+                <button class="x" id="closeForm">×</button>
+            </div>
+
+            <form id="propForm" class="prop-form">
+                <input type="hidden" id="editId" />
+
+                <div class="grid-2">
+                    <label>Title *<input type="text" name="title" required /></label>
+                    <label>Property Type *
+                        <select name="propertyType" required>
+                            <option value="">Select</option>
+                            <option>Plot</option>
+                            <option>Flat / Apartment</option>
+                            <option>Villa</option>
+                            <option>Independent House</option>
+                            <option>Penthouse</option>
+                            <option>Commercial</option>
+                            <option>Farm House</option>
+                            <option>Office Space</option>
+                        </select>
+                    </label>
+                </div>
+
+                <div class="grid-3">
+                    <label>Price *<input type="text" name="price" placeholder="₹ 85 Lakh" required /></label>
+                    <label>Area *<input type="text" name="area" placeholder="1800 sqft" required /></label>
+                    <label>Year Built<input type="number" name="year" min="1950" max="2050" /></label>
+                </div>
+
+                <div class="grid-2">
+                    <label>City *<input type="text" name="city" placeholder="Gwalior" required /></label>
+                    <label>Location / Area *<input type="text" name="location" placeholder="City Centre" required /></label>
+                </div>
+
+                <div class="grid-3">
+                    <label>Beds<input type="number" name="beds" min="0" /></label>
+                    <label>Baths<input type="number" name="baths" min="0" step="0.5" /></label>
+                    <label>Style<input type="text" name="style" placeholder="Modern / Luxury" /></label>
+                </div>
+
+                <label>Description
+                    <textarea name="description" rows="3" placeholder="Short description..."></textarea>
+                </label>
+
+                <div class="grid-2">
+                    <label class="file-label">
+                        Cover Image
+                        <input type="file" name="image" accept="image/*" />
+                        <small class="muted">Leave empty on edit to keep existing</small>
+                    </label>
+                    <label class="file-label">
+                        Gallery Images (multiple)
+                        <input type="file" name="gallery" accept="image/*" multiple />
+                        <small class="muted">New images append to existing gallery</small>
+                    </label>
+                </div>
+
+                <label class="inline">
+                    <input type="checkbox" name="featured" />
+                    <span>Mark as Featured</span>
+                </label>
+
+                <div id="existingGallery" class="existing-gallery" hidden>
+                    <strong>Current gallery:</strong>
+                    <div id="existingGalleryGrid"></div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-outline" id="cancelForm">Cancel</button>
+                    <button type="submit" class="btn-gold" id="submitBtn">Save Property</button>
+                </div>
+                <p class="err" id="formErr"></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast"></div>
+
+    <script src="admin.js"></script>
+    <script>initDashboard();</script>
+</body>
+</html>
